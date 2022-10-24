@@ -13,7 +13,7 @@
     <div class="row justify-content-center">
         <div class="col-md-8">
     <h2 class="text-center text-secondary">AdminLTE</h2>
-    <a href="{{route('index')}}" class="btn btn-danger mb-5">Back to Blog</a>
+    <a href="{{route('index')}}" class="btn btn-danger mb-5">Back to Spirit</a>
         <div class="shadow-lg card ">
     <div class="card-body login-card-body">
       <p class="login-box-msg">Sign in to start your session</p>

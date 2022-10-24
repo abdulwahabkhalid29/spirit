@@ -21,7 +21,7 @@
                             <span class="icon-bar"></span>
                             <span class="icon-bar"></span>
                         </button>
-                        <a class="main_logo" href="{{route('index')}}">
+                        <a class="main_logo" href="{{route('home')}}">
                             <img src="{{asset('images/logo.png')}}" alt="LOGO">
                         </a>
                     </div>
@@ -36,8 +36,15 @@
                             <li><a href="#testimonal_part">Testimonials</a></li>
                             <li><a href="#blog_part">Blog</a></li>
                             <li><a href="#contact_part">Contact</a></li>
-                            <li><a href="{{route('home')}}">Login</a></li>
-                            <li><a href="{{route('register')}}">Register</a></li>
+                            <li>
+                            @guest
+                                <a href="{{route('login')}}">LOGIN</a>
+                            </li>
+                            <li>
+                                <a href="{{route('register')}}">REGISTER</a>
+                            </li>
+                            @endguest
+                            
                         </ul>
                     </div>
                     <!-- /.navbar-collapse -->
@@ -50,25 +57,28 @@
 
     <!--  Banner Part Start  -->
     <section id="banner_part">
-        <div class="slide_active">
-
-            <div class="banner_item" data-bg-image="images/banner-3.jpg">
+    @forelse($carousels as $carousel)
+    <div class="slide_active">
+            <div class="banner_item" data-bg-image="{{asset('upload/carousel/'.$carousel->bgimg)}}">
                 <div class="container text-center">
                     <div class="row">
                         <div class="banner_text">
-                            <h3>WELCOME on <span>spirit</span></h3>
-                            <h4><span>SPIRIT</span> UNIQUE DESIGN WE LOVE IT.</h4>
-                            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Amet porro eaque assumenda consequatur asperiores laboriosam debitis, explicabo.</p>
+                            <h3>{{$carousel->title}}</h3>
+                            <p>{{$carousel->info}}</p>
                             <a href="#" class="multi_button">Know More</a>
                         </div>
                     </div>
                 </div>
             </div>
+            <!-- <div class="banner_arrows">
+                <i class="fa fa-angle-left banner_arrow_left"></i>
+                <i class="fa fa-angle-right banner_arrow_right"></i>
+            </div> -->
+        @empty
+        <div class="mt-5 pt-5">
+        <h1 class="text-center">No Carousel</h1>
         </div>
-        <div class="banner_arrows">
-            <i class="fa fa-angle-left banner_arrow_left"></i>
-            <i class="fa fa-angle-right banner_arrow_right"></i>
-        </div>
+        @endforelse
     </section>
     <!--  Banner Part End  -->
 
@@ -126,54 +136,18 @@
                 </div>
                 <div class="clearfix"></div>
                 <div class="service_bottom text-center">
+                @forelse($services as $service)
                     <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="service_item">
-                            <i class="fa fa-code"></i>
-                            <a href="#"><h3>Web Design</h3></a>
-                            <p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim.</p>
+                            <img src="{{asset('upload/service/'.$service->img)}}" >
+                            <a href="#"><h3>{{$service->title}}</h3></a>
+                            <p>{{$service->info}}</p>
                             <a href="#" class="ser_btn">Read More <i class="fa fa-arrow-right"></i></a>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="service_item">
-                            <i class="fa fa-laptop"></i>
-                            <a href="#"><h3>Web Development</h3></a>
-                            <p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim.</p>
-                            <a href="#" class="ser_btn">Read More <i class="fa fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="service_item">
-                            <i class="fa fa-deviantart"></i>
-                            <a href="#"><h3>PHP</h3></a>
-                            <p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim.</p>
-                            <a href="#" class="ser_btn">Read More <i class="fa fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="service_item">
-                            <i class="fa fa-apple"></i>
-                            <a href="#"><h3>APPS</h3></a>
-                            <p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim.</p>
-                            <a href="#" class="ser_btn">Read More <i class="fa fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="service_item">
-                            <i class="fa fa-leaf"></i>
-                            <a href="#"><h3>Branding</h3></a>
-                            <p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim.</p>
-                            <a href="#" class="ser_btn">Read More <i class="fa fa-arrow-right"></i></a>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="service_item">
-                            <i class="fa fa-support"></i>
-                            <a href="#"><h3>24/7 Support</h3></a>
-                            <p>Nam liber tempor cum soluta nobis eleifend option congue nihil imperdiet doming id quod mazim.</p>
-                            <a href="#" class="ser_btn">Read More <i class="fa fa-arrow-right"></i></a>
-                        </div>
-                    </div>
+                    @empty
+                    <h3>No service found</h3>
+                @endforelse
                 </div>
             </div>
         </div>
@@ -224,6 +198,7 @@
     <section id="work_part">
         <div class="container">
             <div class="row">
+
                 <div class="section_head work_head text-center">
                     <h2><span>our</span> works</h2>
                     <p>Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium.</p>
@@ -231,106 +206,36 @@
                 <div>
                     <ul class="simplefilter work_list">
                         <li class="active" data-filter="all">All Project</li>
-                        <li data-filter="1">Latest</li>
-                        <li data-filter="2">Design</li>
-                        <li data-filter="3">Development</li>
-                        <li data-filter="4">PHP</li>
-                        <li data-filter="5">Apps</li>
+                        @forelse($alsolike as $blog)
+                        <li data-filter="1">{{$blog->category}}</li>
+                        @empty
+                        @endforelse
                     </ul>
                 </div>
 
                 <div class="filtr-container">
-                    <div class="col-xs-12 col-sm-6 col-md-4 filtr-item" data-category="1, 5">
-                        <div class="work_item">
-                            <div class="work_img">
-                                <img src="{{asset('images/work-1.jpg')}}" alt="sample image">
-                                <div class="work_img_inner">
-                                    <a href="#"><i class="fa fa-link"></i></a>
-                                    <a class="venobox" data-gall="myGallery" href="{{asset('images/work-1.jpg')}}"><i class="fa fa-camera"></i></a>
-                                </div>
-                            </div>
-                            <div class="item_des">
-                                <a href="#"><h3>Claritas Etia Processus</h3></a>
-                                <p>Web Design</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 filtr-item" data-category="2, 5">
-                        <div class="work_item">
-                            <div class="work_img">
-                                <img src="{{asset('images/work-2.jpg')}}" alt="sample image">
-                                <div class="work_img_inner">
-                                    <a href="#"><i class="fa fa-link"></i></a>
-                                    <a class="venobox" data-gall="myGallery" href="{{asset('images/work-2.jpg')}}"><i class="fa fa-camera"></i></a>
-                                </div>
-                            </div>
-                            <div class="item_des">
-                                <a href="#"><h3>Quam Nutamus Farum</h3></a>
-                                <p>Graphic Design, Mock-Up</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 filtr-item" data-category="1, 4">
-                        <div class="work_item">
-                            <div class="work_img">
-                                <img src="{{asset('images/work-3.jpg')}}" alt="sample image">
-                                <div class="work_img_inner">
-                                    <a href="#"><i class="fa fa-link"></i></a>
-                                    <a class="venobox" data-gall="myGallery" href="{{asset('images/work-3.jpg')}}"><i class="fa fa-camera"></i></a>
-                                </div>
-                            </div>
-                            <div class="item_des">
-                                <a href="#"><h3>Usus Legentis Videntur</h3></a>
-                                <p>Photography, Holiday</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 filtr-item" data-category="1, 3">
-                        <div class="work_item">
-                            <div class="work_img">
-                                <img src="{{asset('images/work-4.jpg')}}" alt="sample image">
-                                <div class="work_img_inner">
-                                    <a href="#"><i class="fa fa-link"></i></a>
-                                    <a class="venobox" data-gall="myGallery" href="{{asset('images/work-4.jpg')}}"><i class="fa fa-camera"></i></a>
-                                </div>
-                            </div>
-                            <div class="item_des">
-                                <a href="#"><h3>Quam Nutamus Farum</h3></a>
-                                <p>Graphic Design, Mock-Up</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-xs-12 col-sm-6 col-md-4 filtr-item" data-category="3, 4">
-                        <div class="work_item">
-                            <div class="work_img">
-                                <img src="{{asset('images/work-5.jpg')}}" alt="sample image">
-                                <div class="work_img_inner">
-                                    <a href="#"><i class="fa fa-link"></i></a>
-                                    <a class="venobox" data-gall="myGallery" href="{{asset('images/work-5.jpg')}}"><i class="fa fa-camera"></i></a>
-                                </div>
-                            </div>
-                            <div class="item_des">
-                                <a href="#"><h3>Claritas Etia Processus</h3></a>
-                                <p>Web Design</p>
-                            </div>
-                        </div>
-                    </div>
+                    @forelse($alsolike as $blog)
                     <div class="col-xs-12 col-sm-6 col-md-4 filtr-item" data-category="2, 4">
                         <div class="work_item">
                             <div class="work_img">
-                                <img src="{{asset('images/work-6.jpg')}}" alt="sample image">
+                                <img src="{{asset('upload/blog/'.$blog->thumbnail)}}" alt="sample image">
                                 <div class="work_img_inner">
                                     <a href="#"><i class="fa fa-link"></i></a>
-                                    <a class="venobox" data-gall="myGallery" href="{{asset('images/work-6.jpg')}}"><i class="fa fa-camera"></i></a>
+                                    <a class="venobox" data-gall="myGallery" href="{{asset('upload/blog/'.$blog->thumbnail)}}"><i class="fa fa-camera"></i></a>
                                 </div>
                             </div>
                             <div class="item_des">
-                                <a href="#"><h3>Quam Nutamus Farum</h3></a>
-                                <p>Graphic Design, Mock-Up</p>
+                                <a href="#"><h3>{{$blog->title}}</h3></a>
+                                    <p>{{$blog->work}}</p>
                             </div>
                         </div>
                     </div>
+                    @empty
+                    <h3 class="text-center">No blog</h3>
+                    @endforelse
+
                 </div>
+
                 <div class="clearfix"></div>
                 <div class="work_load_btn">
                     <a href="#" class="multi_button">Load More</a>
@@ -419,67 +324,35 @@
                 </div>
                 <div class="testimonal_content">
                     <div class="client_testi">
+                    @forelse($clients as $client)
+
+                        <div class="client_testi_item">
+
                         <div class="client_testi_item">
                             <div class="col-sm-1 col-md-2"></div>
                             <div class="col-xs-5 col-sm-4 col-md-3">
                                 <div class="member_img">
-                                    <img src="{{asset('images/clint-1.jpg')}}" alt="Clint Images">
+                                <img src="{{asset('upload/client/'.$client->image)}}" alt="Client Member">
                                 </div>
                             </div>
                             <div class="col-xs-10 col-sm-7 col-md-7">
                                 <div class="member_info">
-                                    <h3>NIKKA OKAFA</h3>
-                                    <h4>CEO at Super Duper Company</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam blanditiis voluptas, laudantium, facere sunt deleniti assumenda accusantium nesciunt nemo quo pariatur</p>
+                                    <h3>{{$client->name}}</h3>
+                                    <h4>{{$client->company}}</h4>
+                                    <p>{{$client->about}}</p>
                                     <ul>
-                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
+                                        <li><a href="{{$client->facebook}}"><i class="fa fa-facebook"></i></a></li>
+                                        <li><a href="{{$client->twitter}}"><i class="fa fa-twitter"></i></a></li>
+                                        <li><a href="{{$client->linkedin}}"><i class="fa fa-linkedin"></i></a></li>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-                        <div class="client_testi_item">
-                            <div class="col-sm-1 col-md-2"></div>
-                            <div class="col-xs-5 col-sm-4 col-md-3">
-                                <div class="member_img">
-                                    <img src="{{asset('images/clint-2.jpg')}}" alt="Clint Images">
-                                </div>
-                            </div>
-                            <div class="col-xs-10 col-sm-7 col-md-7">
-                                <div class="member_info">
-                                    <h3>STEVE JOBS</h3>
-                                    <h4>CEO at Iphone INC.</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam blanditiis voluptas, laudantium, facere sunt deleniti assumenda accusantium nesciunt nemo quo pariatur</p>
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="client_testi_item">
-                            <div class="col-sm-1 col-md-2"></div>
-                            <div class="col-xs-5 col-sm-4 col-md-3">
-                                <div class="member_img">
-                                    <img src="{{asset('images/clint-3.jpg')}}" alt="Clint Images">
-                                </div>
-                            </div>
-                            <div class="col-xs-10 col-sm-7 col-md-7">
-                                <div class="member_info">
-                                    <h3>LATHEM JOHNS</h3>
-                                    <h4>CEO at Entrepreneur Company</h4>
-                                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam blanditiis voluptas, laudantium, facere sunt deleniti assumenda accusantium nesciunt nemo quo pariatur</p>
-                                    <ul>
-                                        <li><a href="#"><i class="fa fa-facebook"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-twitter"></i></a></li>
-                                        <li><a href="#"><i class="fa fa-linkedin"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
+                   
                     </div>
+                    @empty
+                    <h3 class="text-center">No Client</h3>
+                        @endforelse
                     <!--
                     <div class="testi_arrow">
                         <i class="fa fa-angle-left testi_prev"></i>
@@ -504,62 +377,24 @@
                 <div class="clearfix"></div>
                 <div class="team_member_content">
                     <div class="team_members">
+                        @forelse($teams as $team)
                         <div class="col-sm-4 col-xs-12">
                             <div class="team_memb">
-                                <img src="{{asset('images/team-1.jpg')}}" alt="Team Member">
+                                <img src="{{asset('upload/team/'.$team->img)}}" alt="Team Member">
                                 <div class="team_memb_info">
-                                    <h3>Robin Topper</h3>
-                                    <p>Creative Director</p>
+                                    <h3>{{$team->name}}</h3>
+                                    <p>{{$team->about}}</p>
                                 </div>
                                 <div class="team_social">
-                                    <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-                                    <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
-                                    <a href="#" target="_blank"><i class="fa fa-skype"></i></a>
+                                    <a href="{{$team->facebook}}" ><i class="fa fa-facebook"></i></a>
+                                    <a href="{{$team->twitter}}"><i class="fa fa-twitter"></i></a>
+                                    <a href="{{$team->skype}}"><i class="fa fa-skype"></i></a>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-sm-4 col-xs-12">
-                            <div class="team_memb">
-                                <img src="{{asset('images/team-2.jpg')}}" alt="Team Member">
-                                <div class="team_memb_info">
-                                    <h3>Alex Roren</h3>
-                                    <p>Creative Director</p>
-                                </div>
-                                <div class="team_social">
-                                    <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-                                    <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
-                                    <a href="#" target="_blank"><i class="fa fa-skype"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 col-xs-12">
-                            <div class="team_memb">
-                                <img src="{{asset('images/team-3.jpg')}}" alt="Team Member">
-                                <div class="team_memb_info">
-                                    <h3>Steve Jobs</h3>
-                                    <p>Creative Director</p>
-                                </div>
-                                <div class="team_social">
-                                    <a href="#" target="_blank"><i class="fa fa-facebook"></i></a>
-                                    <a href="#" target="_blank"><i class="fa fa-twitter"></i></a>
-                                    <a href="#" target="_blank"><i class="fa fa-skype"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-4 col-xs-12">
-                            <div class="team_memb">
-                                <img src="{{asset('images/team-2.jpg')}}" alt="Team Member">
-                                <div class="team_memb_info">
-                                    <h3>Jammy JR</h3>
-                                    <p>Creative Director</p>
-                                </div>
-                                <div class="team_social">
-                                    <a href="#"><i class="fa fa-facebook"></i></a>
-                                    <a href="#"><i class="fa fa-twitter"></i></a>
-                                    <a href="#"><i class="fa fa-skype"></i></a>
-                                </div>
-                            </div>
-                        </div>
+                        @empty
+                        <h3></h3>
+                        @endforelse
                     </div>
                     <div class="team_arrow text-right">
                         <i class="fa fa-angle-left team_prev"></i>
@@ -583,106 +418,35 @@
             <div class="row">
                 <div class="blog_content_part">
                     <!-- slick slider -->
+                  
+                @forelse($posts as $post)
                     <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="blog_content">
                             <div class="blog_img_part">
                                 <!-- slick slide inner -->
                                 <div class="img_slide">
                                     <div class="blog_img">
-                                        <img src="{{asset('images/work-1.jpg')}}" alt="img">
+                                         <img src="{{asset('upload/post/'.$post->image)}}" alt="Post Member">
                                     </div>
                                 </div>
                                 <div class="blog_img_inner">
                                     <div class="blog_date">
-                                        <h4>30</h4>
-                                        <p>Sep.</p>
+                                        <h4>{{ date('d' , strtotime( $post->created_at ))}}</h4>
+                                        <p>{{ date('M' , strtotime( $post->created_at ))}}</p>
                                     </div>
                                     <a href="#"><i class="fa fa-link"></i></a>
                                 </div>
                             </div>
 
                             <div class="blog_des">
-                                <h3>Lorem ipsum dolor sit amet</h3>
-                                <p>Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium.</p>
+                                <h3>{{$post->name}}</h3>
+                                <p>{{$post->about}}</p>
                                 <a href="#" class="blog_Read">Read More<i class="fa fa-arrow-right"></i></a>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="blog_content">
-                            <div class="blog_img_part">
-                                <!-- slick slide inner -->
-                                <div class="img_slide">
-                                    <div class="blog_img">
-                                        <img src="{{asset('images/work-2.jpg')}}" alt="img">
-                                    </div>
-                                </div>
-                                <div class="blog_img_inner">
-                                    <div class="blog_date">
-                                        <h4>31</h4>
-                                        <p>sep.</p>
-                                    </div>
-                                    <a href="#"><i class="fa fa-link"></i></a>
-                                </div>
-                            </div>
-
-                            <div class="blog_des">
-                                <h3>Lorem ipsum dolor sit amet</h3>
-                                <p>Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium.</p>
-                                <a href="#" class="blog_Read">Read More<i class="fa fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="blog_content">
-                            <div class="blog_img_part">
-                                <!-- slick slide inner -->
-                                <div class="img_slide">
-                                    <div class="blog_img">
-                                        <img src="{{asset('images/work-3.jpg')}}" alt="img">
-                                    </div>
-                                </div>
-                                <div class="blog_img_inner">
-                                    <div class="blog_date">
-                                        <h4>13</h4>
-                                        <p>Oct.</p>
-                                    </div>
-                                    <a href="#"><i class="fa fa-link"></i></a>
-                                </div>
-                            </div>
-
-                            <div class="blog_des">
-                                <h3>Lorem ipsum dolor sit amet</h3>
-                                <p>Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium.</p>
-                                <a href="#" class="blog_Read">Read More<i class="fa fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-md-4 col-sm-6 col-xs-12">
-                        <div class="blog_content">
-                            <div class="blog_img_part">
-                                <!-- slick slide inner -->
-                                <div class="img_slide">
-                                    <div class="blog_img">
-                                        <img src="{{asset('images/work-3.jpg')}}" alt="img">
-                                    </div>
-                                </div>
-                                <div class="blog_img_inner">
-                                    <div class="blog_date">
-                                        <h4>23</h4>
-                                        <p>Nov</p>
-                                    </div>
-                                    <a href="#"><i class="fa fa-link"></i></a>
-                                </div>
-                            </div>
-
-                            <div class="blog_des">
-                                <h3>Lorem ipsum dolor sit amet</h3>
-                                <p>Claritas est etiam processus dynamicus, qui sequitur mutationem consuetudium.</p>
-                                <a href="#" class="blog_Read">Read More<i class="fa fa-arrow-right"></i></a>
-                            </div>
-                        </div>
-                    </div>
+                    @empty
+                    @endforelse
                 </div>
             </div>
         </div>
@@ -692,6 +456,14 @@
     <!--  Contact Part Start  -->
     <section id="contact_part">
         <div class="container">
+        <div class="row">
+
+        @if(Session::has('success'))
+        <div class="col-md-12 alert alert-success alert-dismissible fade show mb-5 mt-5" role="alert">
+        {{Session::get('success')}}
+
+</div>
+@endif
             <div class="row">
                 <div class="col-sm-12">
                     <div class="section_head contact_head text-center">
@@ -700,21 +472,22 @@
                 </div>
                 <div class="col-sm-8">
                     <div class="contact_form">
-                        <form class="form-group">
+                        <form class="form-group" action="{{route('contact.store')}}" method="POST">
+                            @csrf
                             <div class="col-sm-6">
-                                <input type="text" class="form-control c_name" placeholder="Full Name *" required="">
+                                <input type="text" name="name" class="form-control c_name" placeholder="Full Name *" required="">
                             </div>
                             <div class="col-sm-6">
-                                <input type="email" class="form-control c_email" placeholder="Email *" required="">
+                                <input type="email" name="email" class="form-control c_email" placeholder="Email *" required="">
                             </div>
                             <div class="col-sm-6">
-                                <input type="text" class="form-control c_sub" placeholder="Subject *" required="">
+                                <input type="text" name="subject" class="form-control c_sub" placeholder="Subject *" required="">
                             </div>
                             <div class="col-sm-6">
-                                <input type="number" class="form-control c_num" placeholder="Mobile *" required="">
+                                <input type="number" name="mobile" class="form-control c_num" placeholder="Mobile *" required="">
                             </div>
                             <div class="col-sm-12">
-                                <textarea class="form-control c_textarea" placeholder="Your Message"></textarea>
+                                <textarea class="form-control c_textarea" name="message" placeholder="Your Message"></textarea>
                             </div>
                             <div class="col-sm-12 text-center">
                                 <button class="btn btn-primary">Submit Now</button>
